@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MinfinAnalog.Domain.Model
+namespace MinfinAnalog.Domain.Entities
 {
     public class Сurrency
     {
