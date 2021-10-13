@@ -12,20 +12,20 @@ namespace MinfinAnalog.Data
         }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CurrencyRate> CurencyRates { get; set; }
-        public virtual DbSet<Сurrency> Сurrencies { get; set; }
+        public virtual DbSet<Currency> Сurrencies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>(ConfigureUser);
             builder.Entity<CurrencyRate>(ConfigureCurencyRate);
-            builder.Entity<Сurrency>(ConfigureСurrency);
+            builder.Entity<Currency>(ConfigureСurrency);
         }
         private void ConfigureUser(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users");
 
         }
-        private void ConfigureСurrency(EntityTypeBuilder<Сurrency> builder)
+        private void ConfigureСurrency(EntityTypeBuilder<Currency> builder)
         {
             builder.ToTable("Сurrencies");
 

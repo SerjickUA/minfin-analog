@@ -2,9 +2,9 @@
 
 namespace MinfinAnalog.Domain.Entities
 {
-    public class Сurrency
+    public class Currency
     {
-        public Сurrency()
+        public Currency()
         {
             CurrencyRates = new HashSet<CurrencyRate>();
         }

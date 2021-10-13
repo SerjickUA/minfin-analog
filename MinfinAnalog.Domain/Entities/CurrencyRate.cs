@@ -10,7 +10,7 @@ namespace MinfinAnalog.Domain.Entities
         public DateTime ExchangeDate { get; set; }
         public int CurencyId { get; set; }
         public decimal? Rate { get; set; }
-        public virtual Сurrency Curency { get; set; }
+        public virtual Currency Curency { get; set; }
 
     }
 }
