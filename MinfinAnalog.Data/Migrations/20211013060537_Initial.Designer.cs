@@ -10,8 +10,8 @@ using MinfinAnalog.Data;
 namespace MinfinAnalog.Data.Migrations
 {
     [DbContext(typeof(MinfinAnalogContext))]
-    [Migration("20211006133004_User added")]
-    partial class Useradded
+    [Migration("20211013060537_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,13 +35,14 @@ namespace MinfinAnalog.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("Rate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CurencyId");
 
-                    b.ToTable("CurrencyRate");
+                    b.ToTable("CurrencyRates");
                 });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.User", b =>
@@ -65,7 +66,7 @@ namespace MinfinAnalog.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.Сurrency", b =>
@@ -83,7 +84,7 @@ namespace MinfinAnalog.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Сurrency");
+                    b.ToTable("Сurrencies");
                 });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.CurrencyRate", b =>

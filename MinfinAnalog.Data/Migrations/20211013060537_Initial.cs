@@ -8,7 +8,23 @@ namespace MinfinAnalog.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Сurrency",
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccessToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Сurrencies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -18,43 +34,46 @@ namespace MinfinAnalog.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Сurrency", x => x.Id);
+                    table.PrimaryKey("PK_Сurrencies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CurrencyRate",
+                name: "CurrencyRates",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ExchangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CurencyId = table.Column<int>(type: "int", nullable: false),
-                    Rate = table.Column<decimal>(type: "decimal(18,6)", nullable: true)
+                    Rate = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CurrencyRate", x => x.Id);
+                    table.PrimaryKey("PK_CurrencyRates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CurrencyRate_Сurrency_CurencyId",
+                        name: "FK_CurrencyRates_Сurrencies_CurencyId",
                         column: x => x.CurencyId,
-                        principalTable: "Сurrency",
+                        principalTable: "Сurrencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CurrencyRate_CurencyId",
-                table: "CurrencyRate",
+                name: "IX_CurrencyRates_CurencyId",
+                table: "CurrencyRates",
                 column: "CurencyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CurrencyRate");
+                name: "CurrencyRates");
 
             migrationBuilder.DropTable(
-                name: "Сurrency");
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Сurrencies");
         }
     }
 }
