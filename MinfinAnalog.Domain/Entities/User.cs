@@ -10,6 +10,6 @@ namespace MinfinAnalog.Domain.Entities
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string Email { get; set; }
-        public string AccessToken { get; set; }
+        public virtual ICollection<UserWatchlist> UserWatchlists { get; set; }
     }
 }

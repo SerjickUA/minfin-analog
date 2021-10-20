@@ -15,8 +15,7 @@ namespace MinfinAnalog.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccessToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,16 +57,55 @@ namespace MinfinAnalog.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserWatchlist",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CurencyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserWatchlist", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserWatchlist_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserWatchlist_Сurrencies_CurencyId",
+                        column: x => x.CurencyId,
+                        principalTable: "Сurrencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CurrencyRates_CurencyId",
                 table: "CurrencyRates",
                 column: "CurencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserWatchlist_CurencyId",
+                table: "UserWatchlist",
+                column: "CurencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserWatchlist_UserId",
+                table: "UserWatchlist",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "CurrencyRates");
+
+            migrationBuilder.DropTable(
+                name: "UserWatchlist");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -10,7 +10,7 @@ using MinfinAnalog.Data;
 namespace MinfinAnalog.Data.Migrations
 {
     [DbContext(typeof(MinfinAnalogContext))]
-    [Migration("20211013060537_Initial")]
+    [Migration("20211020015947_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,8 +18,26 @@ namespace MinfinAnalog.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("MinfinAnalog.Domain.Entities.Currency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CurrencyCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Сurrencies");
+                });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.CurrencyRate", b =>
                 {
@@ -52,9 +70,6 @@ namespace MinfinAnalog.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AccessToken")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -69,27 +84,31 @@ namespace MinfinAnalog.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MinfinAnalog.Domain.Entities.Сurrency", b =>
+            modelBuilder.Entity("MinfinAnalog.Domain.Entities.UserWatchlist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CurrencyCode")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CurencyId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Сurrencies");
+                    b.HasIndex("CurencyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserWatchlist");
                 });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.CurrencyRate", b =>
                 {
-                    b.HasOne("MinfinAnalog.Domain.Entities.Сurrency", "Curency")
+                    b.HasOne("MinfinAnalog.Domain.Entities.Currency", "Curency")
                         .WithMany("CurrencyRates")
                         .HasForeignKey("CurencyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -98,9 +117,35 @@ namespace MinfinAnalog.Data.Migrations
                     b.Navigation("Curency");
                 });
 
-            modelBuilder.Entity("MinfinAnalog.Domain.Entities.Сurrency", b =>
+            modelBuilder.Entity("MinfinAnalog.Domain.Entities.UserWatchlist", b =>
+                {
+                    b.HasOne("MinfinAnalog.Domain.Entities.Currency", "Curency")
+                        .WithMany("UserWatchlists")
+                        .HasForeignKey("CurencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MinfinAnalog.Domain.Entities.User", "User")
+                        .WithMany("UserWatchlists")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Curency");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MinfinAnalog.Domain.Entities.Currency", b =>
                 {
                     b.Navigation("CurrencyRates");
+
+                    b.Navigation("UserWatchlists");
+                });
+
+            modelBuilder.Entity("MinfinAnalog.Domain.Entities.User", b =>
+                {
+                    b.Navigation("UserWatchlists");
                 });
 #pragma warning restore 612, 618
         }
