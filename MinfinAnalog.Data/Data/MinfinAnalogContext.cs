@@ -11,13 +11,13 @@ namespace MinfinAnalog.Data
         {
         }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<CurrencyRate> CurencyRates { get; set; }
+        public virtual DbSet<CurrencyRate> CurrencyRates { get; set; }
         public virtual DbSet<Currency> Сurrencies { get; set; }
         public virtual DbSet<UserWatchlist> UserWatchlists { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>(ConfigureUser);
-            builder.Entity<CurrencyRate>(ConfigureCurencyRate);
+            builder.Entity<CurrencyRate>(ConfigureCurrencyRate);
             builder.Entity<Currency>(ConfigureСurrency);
             builder.Entity<UserWatchlist>(ConfigureUserWatchlist);
         }
@@ -30,7 +30,7 @@ namespace MinfinAnalog.Data
         {
             builder.ToTable("Сurrencies");
         }
-        private void ConfigureCurencyRate(EntityTypeBuilder<CurrencyRate> builder)
+        private void ConfigureCurrencyRate(EntityTypeBuilder<CurrencyRate> builder)
         {
             builder.ToTable("CurrencyRates")
                 .Property(cr => cr.Rate).HasPrecision(18, 4);

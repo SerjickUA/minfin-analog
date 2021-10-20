@@ -43,15 +43,15 @@ namespace MinfinAnalog.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ExchangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CurencyId = table.Column<int>(type: "int", nullable: false),
-                    Rate = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: true)
+                    CurrencyId = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CurrencyRates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CurrencyRates_Сurrencies_CurencyId",
-                        column: x => x.CurencyId,
+                        name: "FK_CurrencyRates_Сurrencies_CurrencyId",
+                        column: x => x.CurrencyId,
                         principalTable: "Сurrencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -64,7 +64,7 @@ namespace MinfinAnalog.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    CurencyId = table.Column<int>(type: "int", nullable: false)
+                    CurrencyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,22 +76,22 @@ namespace MinfinAnalog.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserWatchlist_Сurrencies_CurencyId",
-                        column: x => x.CurencyId,
+                        name: "FK_UserWatchlist_Сurrencies_CurrencyId",
+                        column: x => x.CurrencyId,
                         principalTable: "Сurrencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CurrencyRates_CurencyId",
+                name: "IX_CurrencyRates_CurrencyId",
                 table: "CurrencyRates",
-                column: "CurencyId");
+                column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserWatchlist_CurencyId",
+                name: "IX_UserWatchlist_CurrencyId",
                 table: "UserWatchlist",
-                column: "CurencyId");
+                column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserWatchlist_UserId",

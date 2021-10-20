@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MinfinAnalog.Domain.Entities
 {
     public class User
     {
+        public User()
+        {
+            UserWatchlists = new List<UserWatchlist>();
+        }
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }

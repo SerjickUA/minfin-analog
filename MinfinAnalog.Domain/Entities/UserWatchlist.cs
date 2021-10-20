@@ -9,7 +9,7 @@ namespace MinfinAnalog.Domain.Entities
         public int Id { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
-        public int CurencyId { get; set; }
-        public virtual Currency Curency { get; set; }
+        public int CurrencyId { get; set; }
+        public virtual Currency Currency { get; set; }
     }
 }

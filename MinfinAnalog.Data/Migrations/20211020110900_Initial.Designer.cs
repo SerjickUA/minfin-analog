@@ -10,7 +10,7 @@ using MinfinAnalog.Data;
 namespace MinfinAnalog.Data.Migrations
 {
     [DbContext(typeof(MinfinAnalogContext))]
-    [Migration("20211020015947_Initial")]
+    [Migration("20211020110900_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,19 +46,19 @@ namespace MinfinAnalog.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CurencyId")
+                    b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ExchangeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("Rate")
+                    b.Property<decimal>("Rate")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurencyId");
+                    b.HasIndex("CurrencyId");
 
                     b.ToTable("CurrencyRates");
                 });
@@ -91,7 +91,7 @@ namespace MinfinAnalog.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CurencyId")
+                    b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -99,7 +99,7 @@ namespace MinfinAnalog.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurencyId");
+                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("UserId");
 
@@ -108,20 +108,20 @@ namespace MinfinAnalog.Data.Migrations
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.CurrencyRate", b =>
                 {
-                    b.HasOne("MinfinAnalog.Domain.Entities.Currency", "Curency")
-                        .WithMany("CurrencyRates")
-                        .HasForeignKey("CurencyId")
+                    b.HasOne("MinfinAnalog.Domain.Entities.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Curency");
+                    b.Navigation("Currency");
                 });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.UserWatchlist", b =>
                 {
-                    b.HasOne("MinfinAnalog.Domain.Entities.Currency", "Curency")
-                        .WithMany("UserWatchlists")
-                        .HasForeignKey("CurencyId")
+                    b.HasOne("MinfinAnalog.Domain.Entities.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -131,16 +131,9 @@ namespace MinfinAnalog.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Curency");
+                    b.Navigation("Currency");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MinfinAnalog.Domain.Entities.Currency", b =>
-                {
-                    b.Navigation("CurrencyRates");
-
-                    b.Navigation("UserWatchlists");
                 });
 
             modelBuilder.Entity("MinfinAnalog.Domain.Entities.User", b =>

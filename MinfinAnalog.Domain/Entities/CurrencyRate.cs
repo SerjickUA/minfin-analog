@@ -8,9 +8,8 @@ namespace MinfinAnalog.Domain.Entities
     {
         public int Id { get; set; }
         public DateTime ExchangeDate { get; set; }
-        public int CurencyId { get; set; }
-        public decimal? Rate { get; set; }
-        public virtual Currency Curency { get; set; }
+        public int CurrencyId { get; set; }
+        public decimal Rate { get; set; }
 
     }
 }

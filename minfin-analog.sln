@@ -12,7 +12,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Data", "Minfin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Test", "MinfinAnalog.Test\MinfinAnalog.Test.csproj", "{77D1362C-3D2E-40A7-AE54-FD54FEEF38E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinfinAnalog.Api", "MinfinAnalog.Api\MinfinAnalog.Api.csproj", "{B7382F2B-57E3-4977-93CA-1C0ABD3C7BC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Api", "MinfinAnalog.Api\MinfinAnalog.Api.csproj", "{B7382F2B-57E3-4977-93CA-1C0ABD3C7BC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C} = {CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C}
+		{66A9AF9C-5DCA-48D6-A133-316912F15BB1} = {66A9AF9C-5DCA-48D6-A133-316912F15BB1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinfinAnalog.UpdateDB", "MinfinAnalog.UpdateDB\MinfinAnalog.UpdateDB.csproj", "{59A01BB5-D05C-4A0A-895E-5DD399DEC687}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C} = {CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C}
 		{66A9AF9C-5DCA-48D6-A133-316912F15BB1} = {66A9AF9C-5DCA-48D6-A133-316912F15BB1}
@@ -40,6 +46,10 @@ Global
 		{B7382F2B-57E3-4977-93CA-1C0ABD3C7BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7382F2B-57E3-4977-93CA-1C0ABD3C7BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7382F2B-57E3-4977-93CA-1C0ABD3C7BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A01BB5-D05C-4A0A-895E-5DD399DEC687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A01BB5-D05C-4A0A-895E-5DD399DEC687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A01BB5-D05C-4A0A-895E-5DD399DEC687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A01BB5-D05C-4A0A-895E-5DD399DEC687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

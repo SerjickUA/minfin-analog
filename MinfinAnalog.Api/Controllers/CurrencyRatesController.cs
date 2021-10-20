@@ -23,16 +23,16 @@ namespace MinfinAnalog.Api
 
         // GET: api/CurrencyRate
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CurrencyRate>>> GetCurencyRates()
+        public async Task<ActionResult<IEnumerable<CurrencyRate>>> GetCurrencyRates()
         {
-            return await _context.CurencyRates.ToListAsync();
+            return await _context.CurrencyRates.ToListAsync();
         }
 
         // GET: api/CurrencyRate/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CurrencyRate>> GetCurrencyRate(int id)
         {
-            var currencyRate = await _context.CurencyRates.FindAsync(id);
+            var currencyRate = await _context.CurrencyRates.FindAsync(id);
 
             if (currencyRate == null)
             {
@@ -80,7 +80,7 @@ namespace MinfinAnalog.Api
         [HttpPost]
         public async Task<ActionResult<CurrencyRate>> PostCurrencyRate(CurrencyRate currencyRate)
         {
-            _context.CurencyRates.Add(currencyRate);
+            _context.CurrencyRates.Add(currencyRate);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCurrencyRate", new { id = currencyRate.Id }, currencyRate);
@@ -90,13 +90,13 @@ namespace MinfinAnalog.Api
         [HttpDelete("{id}")]
         public async Task<ActionResult<CurrencyRate>> DeleteCurrencyRate(int id)
         {
-            var currencyRate = await _context.CurencyRates.FindAsync(id);
+            var currencyRate = await _context.CurrencyRates.FindAsync(id);
             if (currencyRate == null)
             {
                 return NotFound();
             }
 
-            _context.CurencyRates.Remove(currencyRate);
+            _context.CurrencyRates.Remove(currencyRate);
             await _context.SaveChangesAsync();
 
             return currencyRate;
@@ -104,7 +104,7 @@ namespace MinfinAnalog.Api
 
         private bool CurrencyRateExists(int id)
         {
-            return _context.CurencyRates.Any(e => e.Id == id);
+            return _context.CurrencyRates.Any(e => e.Id == id);
         }
     }
 }
