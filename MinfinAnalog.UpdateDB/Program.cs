@@ -29,20 +29,15 @@ namespace MinfinAnalog.UpdateDB
                     sw.Reset();
                     sw.Start();
                     var nbuCurrencyJson = GetNbuCurrencyJson(date, apiClient);
-                    Console.WriteLine(nbuCurrencyJson);                    var nbuCurrencyList = DeserializeJson(nbuCurrencyJson);
+                    var nbuCurrencyList = DeserializeJson(nbuCurrencyJson);
+
                     using (var context = new MinfinAnalogContext(BuildDbContextOptions()))
                     {
                         AddCurrencies(nbuCurrencyList, context);
-                        var currencies = context.Сurrencies.ToList();
-                        Dictionary<string, int> currencyIdByCode = new Dictionary<string, int>();
-                        foreach (Currency currency in currencies)
-                        {
-                            if(!currencyIdByCode.ContainsKey(currency.CurrencyCode))
-                            {
-                                currencyIdByCode.Add(currency.CurrencyCode, currency.Id);
-                            }
-                        }
 
+                        var currencyIdByCode = context.Сurrencies.ToDictionary(c => c.CurrencyCode, c => c.Id);
+
+                        sw.Stop();
                         AddCurrencyRates(nbuCurrencyList, currencyIdByCode, context);
                         Console.WriteLine($"Done. => {date}. Time elapsed (ms): {sw.ElapsedMilliseconds}");
                     }
@@ -59,7 +54,7 @@ namespace MinfinAnalog.UpdateDB
         private static void AddCurrencyRates(List<NbuCurrencyRate> nbuCurrencyList, Dictionary<string, int> currencyIdByCode, MinfinAnalogContext context)
         {
              if (nbuCurrencyList.Count > 0 && nbuCurrencyList[0].ExchangeDate > GetCurrencyRatesMaxDate(context))
-            {
+             {
                 foreach (var nbuCurrency in nbuCurrencyList)
                 {
                     context.CurrencyRates.Add(new CurrencyRate
@@ -92,9 +87,10 @@ namespace MinfinAnalog.UpdateDB
                         CurrencyCode = nbuCurrency.CurrencyCode,
                         Name = nbuCurrency.CurrencyName
                     });
-                    context.SaveChanges();
+
                 }
             }
+            context.SaveChanges();
         }
 
         private static DbContextOptions<MinfinAnalogContext> BuildDbContextOptions()
@@ -117,14 +113,9 @@ namespace MinfinAnalog.UpdateDB
         {
             var dateFormated = date.ToString("yyyyMMdd");
             var nbuCurrencyUrl = $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json&date={dateFormated}";
-
-            var nbuCurrencyJson = string.Empty;
-
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            nbuCurrencyJson = LoadJsonData(nbuCurrencyUrl, client).GetAwaiter().GetResult();
-
-            return nbuCurrencyJson;
+            return LoadJsonData(nbuCurrencyUrl, client).GetAwaiter().GetResult();
         }
 
         private static List<NbuCurrencyRate> DeserializeJson(string nbuCurrencyJson)
