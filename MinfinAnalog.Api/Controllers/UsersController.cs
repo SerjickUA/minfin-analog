@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MinfinAnalog.Data;
 using MinfinAnalog.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace MinfinAnalog.Api
 {
@@ -15,17 +16,18 @@ namespace MinfinAnalog.Api
     public class UsersController : ControllerBase
     {
         private readonly MinfinAnalogContext _context;
-
-        public UsersController(MinfinAnalogContext context)
+        private readonly ILogger<UsersController> _logger;
+        public UsersController(MinfinAnalogContext context, ILogger<UsersController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-
+            _logger.LogWarning("called GetUsers");
             return await _context.Users.ToListAsync();
         }
 
