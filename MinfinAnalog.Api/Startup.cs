@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace MinfinAnalog.Api
 {
@@ -51,6 +52,8 @@ namespace MinfinAnalog.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSerilogRequestLogging();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
