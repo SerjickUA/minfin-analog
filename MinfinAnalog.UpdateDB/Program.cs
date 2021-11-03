@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MinfinAnalog.Domain.Entities;
+using MinfinAnalog.Data.Entities;
 using MinfinAnalog.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

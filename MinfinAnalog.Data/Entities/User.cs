@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MinfinAnalog.Domain.Entities
+namespace MinfinAnalog.Data.Entities
 {
     public class User
     {
@@ -13,6 +13,8 @@ namespace MinfinAnalog.Domain.Entities
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public virtual ICollection<UserWatchlist> UserWatchlists { get; set; }
     }
 }

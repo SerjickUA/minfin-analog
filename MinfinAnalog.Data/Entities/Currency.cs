@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MinfinAnalog.Domain.Entities
+namespace MinfinAnalog.Data.Entities
 {
     public class Currency
     {

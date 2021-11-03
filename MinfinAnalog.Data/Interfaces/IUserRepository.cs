@@ -1,12 +1,11 @@
-﻿using MinfinAnalog.Domain.Entities;
+﻿using MinfinAnalog.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MinfinAnalog.Data.Interfaces
 {
-    interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<User>
     {
-
     }
 }

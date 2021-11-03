@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MinfinAnalog.Domain.Interfaces
 {
-    interface IUserService
+    public interface IUserService
     {
-            Task<IEnumerable<UserDTO>> GetUserList();
-            Task<UserDTO> GetUserById(int userId);
-            Task<UserDTO> Create(UserDTO userModel);
-            Task Update(UserDTO userModel);
-            Task Delete(UserDTO userModel);
+            Task<IEnumerable<UserDto>> GetUsers();
+            Task<UserDto> GetUserById(int userId);
+            //Task<UserDto> Create(UserDto userDto);
+            //Task Update(UserDto userDto);
+            //Task Delete(UserDto userDto);
     }
 }

@@ -4,11 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Domain", "MinfinAnalog.Domain\MinfinAnalog.Domain.csproj", "{66A9AF9C-5DCA-48D6-A133-316912F15BB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C} = {CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Data", "MinfinAnalog.Data\MinfinAnalog.Data.csproj", "{CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{66A9AF9C-5DCA-48D6-A133-316912F15BB1} = {66A9AF9C-5DCA-48D6-A133-316912F15BB1}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Test", "MinfinAnalog.Test\MinfinAnalog.Test.csproj", "{77D1362C-3D2E-40A7-AE54-FD54FEEF38E8}"
 EndProject
@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Api", "MinfinA
 		{66A9AF9C-5DCA-48D6-A133-316912F15BB1} = {66A9AF9C-5DCA-48D6-A133-316912F15BB1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinfinAnalog.UpdateDB", "MinfinAnalog.UpdateDB\MinfinAnalog.UpdateDB.csproj", "{59A01BB5-D05C-4A0A-895E-5DD399DEC687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.UpdateDB", "MinfinAnalog.UpdateDB\MinfinAnalog.UpdateDB.csproj", "{59A01BB5-D05C-4A0A-895E-5DD399DEC687}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C} = {CC2F8303-FF6F-4ECE-9EB1-A9AF43077D1C}
 		{66A9AF9C-5DCA-48D6-A133-316912F15BB1} = {66A9AF9C-5DCA-48D6-A133-316912F15BB1}

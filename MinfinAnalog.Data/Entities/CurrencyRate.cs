@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MinfinAnalog.Domain.Entities
+namespace MinfinAnalog.Data.Entities
 {
     public class CurrencyRate
     {

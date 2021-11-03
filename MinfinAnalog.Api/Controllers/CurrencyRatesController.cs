@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MinfinAnalog.Data;
-using MinfinAnalog.Domain.Entities;
+using MinfinAnalog.Data.Entities;
 
 namespace MinfinAnalog.Api
 {

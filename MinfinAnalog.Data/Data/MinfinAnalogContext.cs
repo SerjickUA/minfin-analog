@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using MinfinAnalog.Domain.Entities;
+using MinfinAnalog.Data.Entities;
 
 namespace MinfinAnalog.Data
 {

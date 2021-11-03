@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MinfinAnalog.Data;
-using MinfinAnalog.Domain.Entities;
+using MinfinAnalog.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +16,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using MinfinAnalog.Domain.Interfaces;
+using MinfinAnalog.Domain.Services;
+using MinfinAnalog.Data.Interfaces;
+using MinfinAnalog.Data.Repositories;
+using AutoMapper;
+using MinfinAnalog.Domain.MappingConfigurations;
 
 namespace MinfinAnalog.Api
 {
@@ -33,7 +39,19 @@ namespace MinfinAnalog.Api
         {
             services.AddControllers();
             services.AddDbContext<MinfinAnalogContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new UserProfile());
+            });
 
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+
+            //services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

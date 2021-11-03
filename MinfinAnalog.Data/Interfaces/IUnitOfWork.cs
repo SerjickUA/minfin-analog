@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinfinAnalog.Domain.Interfaces
+namespace MinfinAnalog.Data.Interfaces
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork
     {
         int Save();
     }
