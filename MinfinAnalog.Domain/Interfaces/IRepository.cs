@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace MinfinAnalog.Data.Interfaces
+namespace MinfinAnalog.Domain.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MinfinAnalog.Data.Interfaces
+namespace MinfinAnalog.Domain.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {

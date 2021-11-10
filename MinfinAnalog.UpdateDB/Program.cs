@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MinfinAnalog.Data.Entities;
 using MinfinAnalog.Data;
+using MinfinAnalog.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +43,7 @@ namespace MinfinAnalog.UpdateDB
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
@@ -53,8 +53,8 @@ namespace MinfinAnalog.UpdateDB
 
         private static void AddCurrencyRates(List<NbuCurrencyRate> nbuCurrencyList, Dictionary<string, int> currencyIdByCode, MinfinAnalogContext context)
         {
-             if (nbuCurrencyList.Count > 0 && nbuCurrencyList[0].ExchangeDate > GetCurrencyRatesMaxDate(context))
-             {
+            if (nbuCurrencyList.Count > 0 && nbuCurrencyList[0].ExchangeDate > GetCurrencyRatesMaxDate(context))
+            {
                 foreach (var nbuCurrency in nbuCurrencyList)
                 {
                     context.CurrencyRates.Add(new CurrencyRate
@@ -123,7 +123,7 @@ namespace MinfinAnalog.UpdateDB
             var options = new JsonSerializerOptions();
             options.Converters.Add(new CustomDateTimeConverter());
             return JsonSerializer.Deserialize<List<NbuCurrencyRate>>(nbuCurrencyJson, options);
-         }
+        }
 
         public static async Task<string> LoadJsonData(string url, HttpClient apiClient)
         {

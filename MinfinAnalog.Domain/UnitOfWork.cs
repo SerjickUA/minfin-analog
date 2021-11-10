@@ -1,4 +1,4 @@
-﻿using MinfinAnalog.Data.Interfaces;
+﻿using MinfinAnalog.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

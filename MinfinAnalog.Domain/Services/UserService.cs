@@ -4,8 +4,6 @@ using MinfinAnalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MinfinAnalog.Data.Interfaces;
-using MinfinAnalog.Data.Entities;
 
 namespace MinfinAnalog.Domain.Services
 {

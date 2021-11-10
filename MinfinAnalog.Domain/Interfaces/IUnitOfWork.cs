@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinfinAnalog.Data.Interfaces
+namespace MinfinAnalog.Domain.Interfaces
 {
     public interface IUnitOfWork
     {

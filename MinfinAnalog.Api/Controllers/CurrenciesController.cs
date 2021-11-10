@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MinfinAnalog.Data;
-using MinfinAnalog.Data.Entities;
+//using MinfinAnalog.Data;
+//using MinfinAnalog.Data.Entities;
 
 namespace MinfinAnalog.Api
 {
@@ -14,97 +14,97 @@ namespace MinfinAnalog.Api
     [ApiController]
     public class CurrenciesController : ControllerBase
     {
-        private readonly MinfinAnalogContext _context;
+        //private readonly MinfinAnalogContext _context;
 
-        public CurrenciesController(MinfinAnalogContext context)
-        {
-            _context = context;
-        }
+        //public CurrenciesController(MinfinAnalogContext context)
+        //{
+        //    _context = context;
+        //}
 
-        // GET: api/Currencies
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Currency>>> GetСurrencies()
-        {
-            return await _context.Сurrencies.ToListAsync();
-        }
+        //// GET: api/Currencies
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Currency>>> GetСurrencies()
+        //{
+        //    return await _context.Сurrencies.ToListAsync();
+        //}
 
-        // GET: api/Currencies/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Currency>> GetCurrency(int id)
-        {
-            var currency = await _context.Сurrencies.FindAsync(id);
+        //// GET: api/Currencies/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Currency>> GetCurrency(int id)
+        //{
+        //    var currency = await _context.Сurrencies.FindAsync(id);
 
-            if (currency == null)
-            {
-                return NotFound();
-            }
+        //    if (currency == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return currency;
-        }
+        //    return currency;
+        //}
 
-        // PUT: api/Currencies/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurrency(int id, Currency currency)
-        {
-            if (id != currency.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Currencies/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
+        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCurrency(int id, Currency currency)
+        //{
+        //    if (id != currency.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(currency).State = EntityState.Modified;
+        //    _context.Entry(currency).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CurrencyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CurrencyExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Currencies
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Currency>> PostCurrency(Currency currency)
-        {
-            _context.Сurrencies.Add(currency);
-            await _context.SaveChangesAsync();
+        //// POST: api/Currencies
+        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
+        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        //[HttpPost]
+        //public async Task<ActionResult<Currency>> PostCurrency(Currency currency)
+        //{
+        //    _context.Сurrencies.Add(currency);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCurrency", new { id = currency.Id }, currency);
-        }
+        //    return CreatedAtAction("GetCurrency", new { id = currency.Id }, currency);
+        //}
 
-        // DELETE: api/Currencies/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Currency>> DeleteCurrency(int id)
-        {
-            var currency = await _context.Сurrencies.FindAsync(id);
-            if (currency == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Currencies/5
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<Currency>> DeleteCurrency(int id)
+        //{
+        //    var currency = await _context.Сurrencies.FindAsync(id);
+        //    if (currency == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Сurrencies.Remove(currency);
-            await _context.SaveChangesAsync();
+        //    _context.Сurrencies.Remove(currency);
+        //    await _context.SaveChangesAsync();
 
-            return currency;
-        }
+        //    return currency;
+        //}
 
-        private bool CurrencyExists(int id)
-        {
-            return _context.Сurrencies.Any(e => e.Id == id);
-        }
+        //private bool CurrencyExists(int id)
+        //{
+        //    return _context.Сurrencies.Any(e => e.Id == id);
+        //}
     }
 }

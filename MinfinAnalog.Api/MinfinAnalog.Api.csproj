@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MinfinAnalog.Data\MinfinAnalog.Data.csproj" />
     <ProjectReference Include="..\MinfinAnalog.Domain\MinfinAnalog.Domain.csproj" />
   </ItemGroup>
 

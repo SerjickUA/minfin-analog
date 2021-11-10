@@ -18,7 +18,6 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using MinfinAnalog.Domain.Interfaces;
 using MinfinAnalog.Domain.Services;
-using MinfinAnalog.Data.Interfaces;
 using MinfinAnalog.Data.Repositories;
 using AutoMapper;
 using MinfinAnalog.Domain.MappingConfigurations;
@@ -47,8 +46,7 @@ namespace MinfinAnalog.Api
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-
-            //services.AddAutoMapper(typeof(Startup));
+            //services.AddAutoMapper(System.Reflection.Assembly.GetExecutingAssembly());
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -83,6 +81,7 @@ namespace MinfinAnalog.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

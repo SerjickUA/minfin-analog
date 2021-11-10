@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 using MinfinAnalog.Data.Entities;
-
 namespace MinfinAnalog.Data
 {
     public class MinfinAnalogContext : DbContext

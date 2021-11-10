@@ -1,5 +1,6 @@
-﻿using MinfinAnalog.Data.Interfaces;
+﻿using MinfinAnalog.Domain.Interfaces;
 using MinfinAnalog.Data.Entities;
+using MinfinAnalog.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
