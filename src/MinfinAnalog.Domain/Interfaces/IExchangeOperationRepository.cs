@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace MinfinAnalog.Domain.Interfaces;
 public interface IExchangeOperationRepository : IRepository<UserExchangeOperation>
 {
-    decimal GetExchangeBalance(int userId, int currencyId);
+    //decimal GetExchangeBalance(int userId, int currencyId);
 }
 

@@ -6,14 +6,18 @@ namespace MinfinAnalog.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext Context;
+        protected readonly DbContext _dbContext;
 
         private readonly DbSet<TEntity> _dbSet;
 
         public Repository(DbContext context)
         {
-            Context = context;
+            _dbContext = context;
             _dbSet = context.Set<TEntity>() ?? throw new ArgumentNullException(nameof(context));
+            if(_dbSet is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
         }
 
@@ -32,10 +36,10 @@ namespace MinfinAnalog.Data.Repositories
             _dbSet.Update(entity);
         }
 
-        //public async Task<TEntity> GetByIdAsync(object id)
-        //{
-        //    return await _dbSet.FindAsync(id).ConfigureAwait(false);
-        //}
+        public async Task<TEntity> GetByIdAsync(object id)
+        {
+            return await _dbSet.FindAsync(id).ConfigureAwait(false);
+        }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
@@ -48,6 +52,24 @@ namespace MinfinAnalog.Data.Repositories
             IQueryable<TEntity> query = _dbSet.Include(include);
 
             return await query.ToListAsync().ConfigureAwait(false);
+        }
+        public async Task<TEntity> AddAsync(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Add(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         //public async Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)

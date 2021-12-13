@@ -11,15 +11,15 @@ public class ExchangeOperationRepository : Repository<UserExchangeOperation>, IE
 
     public MinfinAnalogContext MinfinAnalogContext
     {
-        get { return Context as MinfinAnalogContext ?? throw new ArgumentNullException(nameof(Context)); }
+        get { return _dbContext as MinfinAnalogContext ?? throw new ArgumentNullException(nameof(_dbContext)); }
     }
 
-    public decimal GetExchangeBalance(int userId, int currencyId)
-    {
-        decimal totalExchangeAmount = 0.0m;
-            // TODO = MinfinAnalogContext.ExchangeOperations.Where(eo => eo.User.Id == userId && eo.SourceCurrency.Id == currencyId).Sum(eo => eo.Amount * eo.Rate);
+    //public decimal GetExchangeBalance(int userId, int currencyId)
+    //{
+    //    decimal totalExchangeAmount = 0.0m;
+    //        // TODO = MinfinAnalogContext.ExchangeOperations.Where(eo => eo.User.Id == userId && eo.SourceCurrency.Id == currencyId).Sum(eo => eo.Amount * eo.Rate);
 
-        return totalExchangeAmount;
-    }
+    //    return totalExchangeAmount;
+    //}
 }
 

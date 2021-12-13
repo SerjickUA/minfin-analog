@@ -11,7 +11,7 @@ namespace MinfinAnalog.Data.Repositories
  
         public MinfinAnalogContext MinfinAnalogContext
         {
-            get { return Context as MinfinAnalogContext ?? throw new ArgumentNullException(nameof(Context)); }
+            get { return _dbContext as MinfinAnalogContext ?? throw new ArgumentNullException(nameof(_dbContext)); }
         }
 
         //public override async Task<IEnumerable<User>> GetUsers()
