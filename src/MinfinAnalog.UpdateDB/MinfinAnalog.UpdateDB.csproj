@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MinfinAnalog.Infrastructure\MinfinAnalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\MinfinAnalog.Data\MinfinAnalog.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

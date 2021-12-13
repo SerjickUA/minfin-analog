@@ -1,98 +1,156 @@
-﻿using System;
-using System.Collections.Generic;
-using MinfinAnalog.Infrastructure;
-using MinfinAnalog.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.Text.Json;
+using MinfinAnalog.Data;
+using MinfinAnalog.Domain.Entities;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace MinfinAnalog.UpdateDB
 {
     class Program
     {
-        private static readonly DateTime startDate = new DateTime(1996, 01, 06);
-        static void Main(string[] args)
+        private static readonly DateTime startDate = new(2021, 10, 1);
+        private static readonly DateTime endDate = new(2021, 12, 12);
+        static async Task Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             try
             {
-                using (HttpClient apiClient = new HttpClient())
+                var dateList = GetDateList(startDate, endDate);
+                using var context = new MinfinAnalogContext(BuildDbContextOptions());
+                var currenciesData = await GetCurrenciesAsync();
+                var currencies = new Dictionary<string, Currency>();
+
+                foreach (var currencyData in currenciesData)
                 {
-                    var date = startDate;
-                    Stopwatch sw = new Stopwatch();
-                    sw.Reset();
-                    sw.Start();
-                    var nbuCurrencyJson = GetNbuCurrencyJson(date, apiClient);
-                    var nbuCurrencyList = DeserializeJson(nbuCurrencyJson);
-
-                    using (var context = new MinfinAnalogContext(BuildDbContextOptions()))
+                    currencies.Add(currencyData.Key,
+                    new Currency()
                     {
-                        AddCurrencies(nbuCurrencyList, context);
-
-                        var currencyIdByCode = context.Сurrencies.ToDictionary(c => c.CurrencyCode, c => c.Id);
-
-                        sw.Stop();
-                        AddCurrencyRates(nbuCurrencyList, currencyIdByCode, context);
-                        Console.WriteLine($"Done. => {date}. Time elapsed (ms): {sw.ElapsedMilliseconds}");
-                    }
+                        CurrencyCode = currencyData.Key,
+                        Name = currencyData.Value
+                    });
                 }
+
+                AddCurrencies(currencies.Values.ToList(), context);
+
+                foreach (var date in dateList)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    Console.WriteLine($"Export data for {date.Year}-{date.Month:00}-{ date.Day:00}");
+                    foreach (var currency in currencies)
+                    {
+                        var sourceCurrencyCode = currency.Key.ToString();
+                        var currencyRates = await GetExchangeRatesAsync(startDate, sourceCurrencyCode, currencies);
+                        if (currencyRates.Count > 0)
+                        {
+                            AddCurrencyRates(currencyRates, context);
+                        }
+                    }
+                    context.SaveChanges();
+                    stopwatch.Stop();
+                    Console.WriteLine($"Time elapsed: {stopwatch.ElapsedMilliseconds} ms");
+                }
+
+                Console.WriteLine("Done!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
+                Console.WriteLine(ex.InnerException.Message);
             }
 
             Console.ReadLine();
         }
-
-        private static void AddCurrencyRates(List<NbuCurrencyRate> nbuCurrencyList, Dictionary<string, int> currencyIdByCode, MinfinAnalogContext context)
+        /// <summary>
+        /// Get currencies list from Free Currency Exchange Rates API (https://github.com/fawazahmed0/currency-api#readme)
+        /// </summary>
+        private static async Task<Dictionary<string, string>> GetCurrenciesAsync()
         {
-            if (nbuCurrencyList.Count > 0 && nbuCurrencyList[0].ExchangeDate > GetCurrencyRatesMaxDate(context))
+            var url = $"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json";
+            return await GetAsync<Dictionary<string, string>>(url);
+        }
+        /// <summary>
+        /// Get exchange rates from Free Currency Exchange Rates API  (https://github.com/fawazahmed0/currency-api#readme)
+        /// </summary>
+        private static async Task<List<CurrencyRate>> GetExchangeRatesAsync(DateTime date, string sourceCurrencyCode
+            , Dictionary<string, Currency> currencies)
+        {
+            var url = $"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/{date.Year}-{date.Month:00}-{date.Day:00}/currencies/{sourceCurrencyCode}.json";
+            Dictionary<string, decimal> currencyRatesData = new();
+            try
             {
-                foreach (var nbuCurrency in nbuCurrencyList)
+                var data = await GetAsync<Dictionary<string, object>>(url);
+                currencyRatesData = JsonSerializer.Deserialize<Dictionary<string,decimal>>(data[sourceCurrencyCode].ToString());
+            }
+            catch { }
+            var rates = new List<CurrencyRate>();
+            foreach (var dataItem in currencyRatesData)
+            {
+
+                var destinationCurrecyCode = dataItem.Key;
+ 
+                if (currencies.ContainsKey(sourceCurrencyCode) && currencies.ContainsKey(destinationCurrecyCode))
                 {
-                    context.CurrencyRates.Add(new CurrencyRate
+                    rates.Add(new CurrencyRate()
                     {
-                        CurrencyId = currencyIdByCode[nbuCurrency.CurrencyCode],
-                        ExchangeDate = nbuCurrency.ExchangeDate,
-                        Rate = nbuCurrency.Rate
+                        ExchangeDate = date,
+                        SourceCurrency = currencies[sourceCurrencyCode],
+                        DestinationCurrency = currencies[destinationCurrecyCode],
+                        Rate = dataItem.Value
                     });
-                    context.SaveChanges();
                 }
             }
+            return rates;
+        }
+        public static IEnumerable<DateTime> GetDateList(DateTime startDate, DateTime endDate)
+        {
+            return Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
         }
 
-        private static DateTime GetCurrencyRatesMaxDate(MinfinAnalogContext context)
+        public static async Task<T> GetAsync<T>(string url)
         {
-            return context.CurrencyRates
-                .OrderByDescending(cr => cr.ExchangeDate)
-                .Select(cr => cr.ExchangeDate)
-                .FirstOrDefault();
-        }
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            var client = new HttpClient();
+             var response = await client.SendAsync(request);
 
-        private static void AddCurrencies(List<NbuCurrencyRate> nbuCurrencyList, MinfinAnalogContext context)
-        {
-            foreach (var nbuCurrency in nbuCurrencyList)
+            if (!response.IsSuccessStatusCode)
             {
-                if (!context.Сurrencies.Any(c => c.CurrencyCode == nbuCurrency.CurrencyCode))
-                {
-                    context.Сurrencies.Add(new Currency
-                    {
-                        CurrencyCode = nbuCurrency.CurrencyCode,
-                        Name = nbuCurrency.CurrencyName
-                    });
+                throw new Exception(response.StatusCode.ToString());
+            }
+            var content = await response.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<T>(content);
+            return responseData;
+        }
 
+        public static async Task<T> GetFromFileAsync<T>(string filePath)
+        {
+            using FileStream openStream = File.OpenRead(filePath);
+            return await JsonSerializer.DeserializeAsync<T>(openStream);
+        }
+
+
+        private static void AddCurrencyRates(List<CurrencyRate> currencyRateList, MinfinAnalogContext context)
+        {
+            context.CurrencyRates.AddRange(currencyRateList);
+        }
+
+        private static void AddCurrencies(List<Currency> currencies, MinfinAnalogContext context)
+        {
+            foreach (var currency in currencies)
+            {
+                if (!context.Currencies.Any(c => c.CurrencyCode == currency.CurrencyCode))
+                {
+                    context.Currencies.Add(currency);
                 }
             }
-            context.SaveChanges();
-        }
 
+        }
         private static DbContextOptions<MinfinAnalogContext> BuildDbContextOptions()
         {
             var configBuilder = new ConfigurationBuilder();
@@ -107,35 +165,6 @@ namespace MinfinAnalog.UpdateDB
                     .UseSqlServer(connectionString)
                     .Options;
             return dbContextOptions;
-        }
-
-        private static string GetNbuCurrencyJson(DateTime date, HttpClient client)
-        {
-            var dateFormated = date.ToString("yyyyMMdd");
-            var nbuCurrencyUrl = $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json&date={dateFormated}";
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            return LoadJsonData(nbuCurrencyUrl, client).GetAwaiter().GetResult();
-        }
-
-        private static List<NbuCurrencyRate> DeserializeJson(string nbuCurrencyJson)
-        {
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new CustomDateTimeConverter());
-            return JsonSerializer.Deserialize<List<NbuCurrencyRate>>(nbuCurrencyJson, options);
-        }
-
-        public static async Task<string> LoadJsonData(string url, HttpClient apiClient)
-        {
-            using HttpResponseMessage response = await apiClient.GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                throw new Exception(response.StatusCode.ToString());
-            }
         }
     }
 }

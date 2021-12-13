@@ -10,7 +10,7 @@ public class MinfinAnalogContext : DbContext
     }
     public virtual DbSet<User> Users => Set<User>();
     public virtual DbSet<CurrencyRate> CurrencyRates => Set<CurrencyRate>();
-    public virtual DbSet<Currency> Сurrencies => Set<Currency>();
+    public virtual DbSet<Currency> Currencies => Set<Currency>();
     public virtual DbSet<UserWatchlist> UserWatchlists => Set<UserWatchlist>();
     public virtual DbSet<UserExchangeOperation> ExchangeOperations => Set<UserExchangeOperation>();
     protected override void OnModelCreating(ModelBuilder builder)
@@ -32,7 +32,7 @@ public class MinfinAnalogContext : DbContext
     private void ConfigureCurrencyRate(EntityTypeBuilder<CurrencyRate> builder)
     {
         builder.ToTable("CurrencyRates");
-        builder.Property(cr => cr.Rate).HasPrecision(18, 6);
+        builder.Property(cr => cr.Rate).HasPrecision(24, 6);
     }
     private void ConfigureUserWatchlist(EntityTypeBuilder<UserWatchlist> builder)
     {

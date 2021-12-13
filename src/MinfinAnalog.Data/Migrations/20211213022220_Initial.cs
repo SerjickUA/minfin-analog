@@ -49,7 +49,7 @@ namespace MinfinAnalog.Data.Migrations
                     ExchangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SourceCurrencyId = table.Column<int>(type: "int", nullable: true),
                     DestinationCurrencyId = table.Column<int>(type: "int", nullable: true),
-                    Rate = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false)
+                    Rate = table.Column<decimal>(type: "decimal(24,6)", precision: 18, scale: 6, nullable: false)
                 },
                 constraints: table =>
                 {
