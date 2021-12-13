@@ -46,17 +46,18 @@ namespace MinfinAnalog.UpdateDB
                     foreach (var currency in currencies)
                     {
                         var sourceCurrencyCode = currency.Key.ToString();
-                        var currencyRates = await GetExchangeRatesAsync(startDate, sourceCurrencyCode, currencies);
+                        var currencyRates = await GetExchangeRatesAsync(date, sourceCurrencyCode, currencies);
                         if (currencyRates.Count > 0)
                         {
                             AddCurrencyRates(currencyRates, context);
                         }
                     }
-                    context.SaveChanges();
+
                     stopwatch.Stop();
                     Console.WriteLine($"Time elapsed: {stopwatch.ElapsedMilliseconds} ms");
                 }
-
+                Console.WriteLine("Saving changes to database.");
+                context.SaveChanges();
                 Console.WriteLine("Done!");
             }
             catch (Exception ex)
@@ -86,6 +87,7 @@ namespace MinfinAnalog.UpdateDB
             try
             {
                 var data = await GetAsync<Dictionary<string, object>>(url);
+
                 currencyRatesData = JsonSerializer.Deserialize<Dictionary<string,decimal>>(data[sourceCurrencyCode].ToString());
             }
             catch { }
