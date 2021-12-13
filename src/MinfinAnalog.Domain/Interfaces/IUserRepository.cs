@@ -1,4 +1,4 @@
-﻿using MinfinAnalog.Data.Entities;
+﻿using MinfinAnalog.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinfinAnalog.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MinfinAnalog.Infrastructure.Repositories
+namespace MinfinAnalog.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -18,10 +13,8 @@ namespace MinfinAnalog.Infrastructure.Repositories
         public Repository(DbContext context)
         {
             Context = context;
-            if (context != null)
-            {
-                _dbSet = context.Set<TEntity>();
-            }
+            _dbSet = context.Set<TEntity>() ?? throw new ArgumentNullException(nameof(context));
+
         }
 
         public virtual void Add(TEntity entity)
@@ -39,10 +32,10 @@ namespace MinfinAnalog.Infrastructure.Repositories
             _dbSet.Update(entity);
         }
 
-        public async Task<TEntity> GetByIdAsync(object id)
-        {
-            return await _dbSet.FindAsync(id).ConfigureAwait(false);
-        }
+        //public async Task<TEntity> GetByIdAsync(object id)
+        //{
+        //    return await _dbSet.FindAsync(id).ConfigureAwait(false);
+        //}
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
@@ -57,11 +50,10 @@ namespace MinfinAnalog.Infrastructure.Repositories
             return await query.ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task<TEntity>
-        SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbSet.SingleOrDefaultAsync(predicate).ConfigureAwait(false);
-        }
+        //public async Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        //{
+        //    return await _dbSet.SingleOrDefaultAsync(predicate).ConfigureAwait(false);
+        //}
 
     }
 }

@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.API", "src\Min
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Domain", "src\MinfinAnalog.Domain\MinfinAnalog.Domain.csproj", "{9F07FCBA-EF25-42A6-98D3-8F36E6CD144F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Infrastructure", "src\MinfinAnalog.Infrastructure\MinfinAnalog.Infrastructure.csproj", "{32D1A8E1-E231-404B-BA98-0E8EA7F2B2DE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.UnitTests", "tests\MinfinAnalog.UnitTests\MinfinAnalog.UnitTests.csproj", "{9C2141F1-89A1-44C0-8302-43659EF1E5CC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.UpdateDB", "src\MinfinAnalog.UpdateDB\MinfinAnalog.UpdateDB.csproj", "{B308ADD5-15AD-4057-985A-F4787AD80FD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinfinAnalog.Data", "src\MinfinAnalog.Data\MinfinAnalog.Data.csproj", "{E3180DDF-893B-42A4-BDED-64F5FFFA5897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinfinAnalog.UnitTests", "tests\MinfinAnalog.UnitTests\MinfinAnalog.UnitTests.csproj", "{254E8D16-AAFA-4050-8936-6F565BF9E0D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,18 +31,18 @@ Global
 		{9F07FCBA-EF25-42A6-98D3-8F36E6CD144F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F07FCBA-EF25-42A6-98D3-8F36E6CD144F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F07FCBA-EF25-42A6-98D3-8F36E6CD144F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{32D1A8E1-E231-404B-BA98-0E8EA7F2B2DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32D1A8E1-E231-404B-BA98-0E8EA7F2B2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32D1A8E1-E231-404B-BA98-0E8EA7F2B2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32D1A8E1-E231-404B-BA98-0E8EA7F2B2DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C2141F1-89A1-44C0-8302-43659EF1E5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C2141F1-89A1-44C0-8302-43659EF1E5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C2141F1-89A1-44C0-8302-43659EF1E5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C2141F1-89A1-44C0-8302-43659EF1E5CC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B308ADD5-15AD-4057-985A-F4787AD80FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B308ADD5-15AD-4057-985A-F4787AD80FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B308ADD5-15AD-4057-985A-F4787AD80FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B308ADD5-15AD-4057-985A-F4787AD80FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3180DDF-893B-42A4-BDED-64F5FFFA5897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3180DDF-893B-42A4-BDED-64F5FFFA5897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3180DDF-893B-42A4-BDED-64F5FFFA5897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3180DDF-893B-42A4-BDED-64F5FFFA5897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{254E8D16-AAFA-4050-8936-6F565BF9E0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{254E8D16-AAFA-4050-8936-6F565BF9E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{254E8D16-AAFA-4050-8936-6F565BF9E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{254E8D16-AAFA-4050-8936-6F565BF9E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,9 +50,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AA01BD2C-D3A1-45A6-B72B-5084F2292C55} = {79B04EC9-0176-44EA-A7B7-A9F10E178C17}
 		{9F07FCBA-EF25-42A6-98D3-8F36E6CD144F} = {79B04EC9-0176-44EA-A7B7-A9F10E178C17}
-		{32D1A8E1-E231-404B-BA98-0E8EA7F2B2DE} = {79B04EC9-0176-44EA-A7B7-A9F10E178C17}
-		{9C2141F1-89A1-44C0-8302-43659EF1E5CC} = {7D7EDFF7-2F23-4FE1-8C94-1AE67E98F633}
 		{B308ADD5-15AD-4057-985A-F4787AD80FD7} = {79B04EC9-0176-44EA-A7B7-A9F10E178C17}
+		{E3180DDF-893B-42A4-BDED-64F5FFFA5897} = {79B04EC9-0176-44EA-A7B7-A9F10E178C17}
+		{254E8D16-AAFA-4050-8936-6F565BF9E0D3} = {7D7EDFF7-2F23-4FE1-8C94-1AE67E98F633}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DF5C01F-B339-4A9A-ACA9-65EE096636AB}

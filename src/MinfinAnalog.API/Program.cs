@@ -1,4 +1,4 @@
-using MinfinAnalog.Infrastructure;
+using MinfinAnalog.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

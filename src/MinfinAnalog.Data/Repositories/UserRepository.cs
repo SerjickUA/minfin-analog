@@ -1,13 +1,7 @@
-﻿using MinfinAnalog.Domain.Interfaces;
-using MinfinAnalog.Data.Entities;
-using MinfinAnalog.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using MinfinAnalog.Domain.Entities;
+using MinfinAnalog.Domain.Interfaces;
 
-namespace MinfinAnalog.Infrastructure.Repositories
+namespace MinfinAnalog.Data.Repositories
 {
     public class UserRepository: Repository<User>, IUserRepository
     {
@@ -17,7 +11,7 @@ namespace MinfinAnalog.Infrastructure.Repositories
  
         public MinfinAnalogContext MinfinAnalogContext
         {
-            get { return Context as MinfinAnalogContext; }
+            get { return Context as MinfinAnalogContext ?? throw new ArgumentNullException(nameof(Context)); }
         }
 
         //public override async Task<IEnumerable<User>> GetUsers()

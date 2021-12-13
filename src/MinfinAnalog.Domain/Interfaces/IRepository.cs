@@ -12,13 +12,13 @@ public interface IRepository<TEntity> where TEntity : class
 
     void Update(TEntity entity);
 
-    Task<TEntity> GetByIdAsync(object id);
+    //Task<TEntity> GetByIdAsync(object id);
 
     Task<IEnumerable<TEntity>> GetAllAsync();
 
     Task<IEnumerable<TEntity>> GetAllAsync<TProperty>
     (Expression<Func<TEntity, TProperty>> include);
 
-    Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+    //Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 }
 

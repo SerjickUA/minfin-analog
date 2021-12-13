@@ -1,9 +1,9 @@
-﻿using MinfinAnalog.Data.Entities;
+﻿using MinfinAnalog.Domain.Entities;
 using MinfinAnalog.Domain.Interfaces;
 
-namespace MinfinAnalog.Infrastructure.Repositories;
+namespace MinfinAnalog.Data.Repositories;
 
-public class ExchangeOperationRepository : Repository<ExchangeOperation>, IExchangeOperationRepository
+public class ExchangeOperationRepository : Repository<UserExchangeOperation>, IExchangeOperationRepository
 {
     public ExchangeOperationRepository(MinfinAnalogContext context) : base(context)
     {
@@ -11,7 +11,7 @@ public class ExchangeOperationRepository : Repository<ExchangeOperation>, IExcha
 
     public MinfinAnalogContext MinfinAnalogContext
     {
-        get { return Context as MinfinAnalogContext; }
+        get { return Context as MinfinAnalogContext ?? throw new ArgumentNullException(nameof(Context)); }
     }
 
     public decimal GetExchangeBalance(int userId, int currencyId)

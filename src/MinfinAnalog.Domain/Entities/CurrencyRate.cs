@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MinfinAnalog.Data.Entities;
+﻿namespace MinfinAnalog.Domain.Entities;
 public class CurrencyRate
 {
     public int Id { get; set; }
     public DateTime ExchangeDate { get; set; }
-    public int CurrencyId { get; set; }
+    public virtual Currency? SourceCurrency { get; set; }
+    public virtual Currency? DestinationCurrency { get; set; }
     public decimal Rate { get; set; }
 
 }
