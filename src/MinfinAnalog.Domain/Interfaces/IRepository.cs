@@ -12,7 +12,7 @@ public interface IRepository<TEntity> where TEntity : class
 
     void Update(TEntity entity);
 
-    Task<TEntity> GetByIdAsync(object id);
+    Task<TEntity> GetByIdAsync(int id);
 
     Task<IEnumerable<TEntity>> GetAllAsync();
 

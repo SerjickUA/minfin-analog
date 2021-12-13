@@ -44,10 +44,11 @@ namespace MinfinAnalog.Api
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public void AddUser(UserDto user)
+        public void AddUser([FromBody] UserDto user)
         {
             _userService.Create(user);
-            _logger.LogInformation($"User with email {user.Email} added.");
+            string email = user.Email;
+            _logger.LogInformation("User with email {user.Email} added.", email);
         }
     }
 }

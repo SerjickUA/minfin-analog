@@ -17,7 +17,7 @@ public class ExchangeOperationRepository : Repository<UserExchangeOperation>, IE
     //public decimal GetExchangeBalance(int userId, int currencyId)
     //{
     //    decimal totalExchangeAmount = 0.0m;
-    //        // TODO = MinfinAnalogContext.ExchangeOperations.Where(eo => eo.User.Id == userId && eo.SourceCurrency.Id == currencyId).Sum(eo => eo.Amount * eo.Rate);
+    //    totalExchangeAmount = MinfinAnalogContext.ExchangeOperations.Where(eo => eo.User.Id == userId && eo.SourceCurrency.Id == currencyId).Sum(eo => eo.Amount * eo.Rate);
 
     //    return totalExchangeAmount;
     //}

@@ -36,7 +36,7 @@ namespace MinfinAnalog.Data.Repositories
             _dbSet.Update(entity);
         }
 
-        public async Task<TEntity> GetByIdAsync(object id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id).ConfigureAwait(false);
         }
